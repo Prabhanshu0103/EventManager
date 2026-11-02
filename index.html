@@ -1,0 +1,2266 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CampusEvents - College Event Management System</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        /* GENERAL CSS */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f6fc;
+            color: #20243a;
+        }
+
+        button, input, select, textarea {
+            font-family: Arial;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+
+        /* NAVBAR */
+
+        .navbar {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px #dddddd;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #172554;
+        }
+
+        .logo span {
+            color: #7656e8;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #44445a;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #7656e8;
+        }
+
+        .nav-button {
+            background: #7656e8;
+            color: white !important;
+            padding: 11px 18px;
+            border-radius: 5px;
+        }
+
+
+        /* COMMON BUTTONS */
+
+        .btn {
+            display: inline-block;
+            background: #7656e8;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background: #583ac0;
+        }
+
+        .btn-red {
+            background: #dc3545;
+        }
+
+        .btn-green {
+            background: #198754;
+        }
+
+        .btn-dark {
+            background: #172554;
+        }
+
+        .btn-light {
+            background: #eeeeff;
+            color: #7656e8;
+        }
+
+
+        /* PAGE COMMON DESIGN */
+
+        .page {
+            display: none;
+            min-height: 75vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .section {
+            padding: 60px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            color: #172554;
+        }
+
+        .section-title p {
+            color: #777777;
+        }
+
+
+        /* HOME HERO */
+
+        .hero {
+            background: #171b3b;
+            color: white;
+            padding: 90px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-content {
+            width: 55%;
+        }
+
+        .small-title {
+            color: #a58aff;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.2;
+            margin: 20px 0;
+        }
+
+        .hero h1 span {
+            color: #a58aff;
+        }
+
+        .hero p {
+            color: #ccccdd;
+            line-height: 1.8;
+        }
+
+        .hero-art {
+            background: #7656e8;
+            width: 40%;
+            min-height: 300px;
+            padding: 30px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-art h2 {
+            font-size: 40px;
+        }
+
+        .hero-art p {
+            color: white;
+            letter-spacing: 2px;
+        }
+
+
+        /* STATISTICS */
+
+        .statistics {
+            background: white;
+            padding: 30px 5%;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-box h2 {
+            color: #7656e8;
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .stat-box p {
+            color: #777777;
+        }
+
+
+        /* EVENT CARDS */
+
+        .event-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px #dddddd;
+            transition: 0.3s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .event-banner {
+            height: 155px;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .event-banner h2 {
+            font-size: 27px;
+            margin: 8px 0;
+        }
+
+        .technical {
+            background: #3157b7;
+        }
+
+        .cultural {
+            background: #8b48c9;
+        }
+
+        .sports {
+            background: #19856b;
+        }
+
+        .academic {
+            background: #c17a29;
+        }
+
+        .other {
+            background: #52647c;
+        }
+
+        .event-details {
+            padding: 20px;
+        }
+
+        .event-details h3 {
+            margin: 5px 0;
+        }
+
+        .event-details p {
+            color: #777777;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .event-meta {
+            font-size: 13px;
+            color: #555577;
+            line-height: 1.8;
+        }
+
+
+        /* ABOUT */
+
+        .about {
+            background: #171b3b;
+            color: white;
+            padding: 65px 10%;
+            text-align: center;
+        }
+
+        .about p {
+            line-height: 1.9;
+            color: #ccccdd;
+            max-width: 750px;
+            margin: auto;
+        }
+
+
+        /* WHY SECTION */
+
+        .why-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .why-card {
+            background: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px #dddddd;
+        }
+
+        .why-card h3 {
+            color: #7656e8;
+        }
+
+        .why-card p {
+            color: #777777;
+            line-height: 1.7;
+        }
+
+
+        /* FORMS */
+
+        .form-box {
+            background: white;
+            max-width: 650px;
+            margin: 30px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px #dddddd;
+        }
+
+        .form-box h2 {
+            text-align: center;
+            color: #172554;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            height: 85px;
+            resize: vertical;
+        }
+
+        .form-box button {
+            width: 100%;
+            margin: 5px 0;
+        }
+
+
+        /* PAGE HEADER */
+
+        .page-header {
+            background: #171b3b;
+            color: white;
+            text-align: center;
+            padding: 45px 20px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+        }
+
+        .page-header p {
+            color: #ccccdd;
+        }
+
+
+        /* SEARCH AND FILTER */
+
+        .filter-box {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-box input,
+        .filter-box select {
+            padding: 12px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            min-width: 220px;
+        }
+
+
+        /* TABLE */
+
+        .table-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            box-shadow: 0 3px 12px #dddddd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th, td {
+            border-bottom: 1px solid #eeeeee;
+            padding: 13px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background: #172554;
+            color: white;
+        }
+
+
+        /* DASHBOARD */
+
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px #dddddd;
+        }
+
+        .dashboard-card h2 {
+            color: #7656e8;
+            font-size: 32px;
+        }
+
+        .dashboard-card p {
+            color: #777777;
+        }
+
+
+        /* FOOTER */
+
+        .footer {
+            background: #11152f;
+            color: white;
+            text-align: center;
+            padding: 35px 15px;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            color: #bbbbcc;
+            font-size: 13px;
+        }
+
+
+        /* RESPONSIVE DESIGN */
+
+        @media (max-width: 850px) {
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .event-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .why-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 55px 7%;
+            }
+
+            .hero-content,
+            .hero-art {
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .hero-art {
+                min-height: 230px;
+            }
+
+            .event-container,
+            .why-container,
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 40px 5%;
+            }
+
+            .statistics {
+                gap: 15px;
+            }
+
+            .stat-box {
+                width: 40%;
+            }
+
+            .form-box {
+                margin: 20px 5%;
+                padding: 20px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            Campus<span>Events.</span>
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="#" onclick="showPage('home')">Home</a>
+
+            <a href="#" onclick="showPage('events')">Events</a>
+
+            <a href="#" onclick="showPage('about')">About</a>
+
+            <a href="#" onclick="showPage('myEvents')">My Events</a>
+
+            <a href="#" onclick="showPage('adminLogin')" class="nav-button">
+                Admin
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- HOME PAGE -->
+
+    <div id="home" class="page active">
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <p class="small-title">YOUR CAMPUS. YOUR MOMENT.</p>
+
+                <h1>
+                    Every Event Has<br>
+                    A <span>Story</span> To Tell.
+                </h1>
+
+                <p>
+                    Discover exciting college events, participate
+                    in activities and create unforgettable memories.
+                    Your next great experience starts here.
+                </p>
+
+                <button class="btn" onclick="showPage('events')">
+                    Explore Events →
+                </button>
+
+            </div>
+
+            <div class="hero-art">
+
+                <p>✦ CAMPUS LIFE ✦</p>
+
+                <h2>CREATE<br>MEMORIES.</h2>
+
+                <p>LEARN. CONNECT. CELEBRATE.</p>
+
+            </div>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+
+        <section class="statistics">
+
+            <div class="stat-box">
+                <h2 id="homeEvents">0</h2>
+                <p>College Events</p>
+            </div>
+
+            <div class="stat-box">
+                <h2 id="homeParticipants">0</h2>
+                <p>Registrations</p>
+            </div>
+
+            <div class="stat-box">
+                <h2>5+</h2>
+                <p>Event Categories</p>
+            </div>
+
+            <div class="stat-box">
+                <h2>100%</h2>
+                <p>Campus Spirit</p>
+            </div>
+
+        </section>
+
+
+        <!-- FEATURED EVENTS -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <p class="small-title">WHAT'S HAPPENING?</p>
+
+                <h2>Explore Our Events</h2>
+
+                <p>Find something exciting. Get involved.</p>
+
+            </div>
+
+            <div class="event-container" id="homeEventList"></div>
+
+            <div style="text-align:center; margin-top:30px;">
+
+                <button class="btn" onclick="showPage('events')">
+                    View All Events →
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+
+        <section class="about" id="about">
+
+            <p class="small-title">ABOUT CAMPUS EVENTS</p>
+
+            <h2>More Than Just Events.<br>It's About Experiences.</h2>
+
+            <p>
+                CampusEvents is a platform designed to bring
+                college activities together in one place.
+
+                Students can explore upcoming events, participate
+                in activities and connect with their college community.
+                Administrators can manage events and registrations
+                through the admin section.
+            </p>
+
+        </section>
+
+
+        <!-- WHY CHOOSE US -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <h2>Why Choose CampusEvents?</h2>
+
+                <p>Everything you need in one place.</p>
+
+            </div>
+
+            <div class="why-container">
+
+                <div class="why-card">
+                    <h3>Easy Registration</h3>
+                    <p>Register for college events using a simple form.</p>
+                </div>
+
+                <div class="why-card">
+                    <h3>Explore Events</h3>
+                    <p>Find technical, cultural and sports activities.</p>
+                </div>
+
+                <div class="why-card">
+                    <h3>Manage Activities</h3>
+                    <p>View registrations and manage event information.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- EVENTS PAGE -->
+
+    <div id="events" class="page">
+
+        <div class="page-header">
+
+            <h1>Explore College Events</h1>
+
+            <p>Discover events and register for your favourites.</p>
+
+        </div>
+
+        <section class="section">
+
+            <div class="filter-box">
+
+                <input type="text" id="searchEvent"
+                placeholder="Search events..."
+                onkeyup="displayEvents()">
+
+                <select id="filterCategory" onchange="displayEvents()">
+
+                    <option value="">All Categories</option>
+                    <option>Technical</option>
+                    <option>Cultural</option>
+                    <option>Sports</option>
+                    <option>Academic</option>
+                    <option>Other</option>
+
+                </select>
+
+            </div>
+
+            <div class="event-container" id="allEventList"></div>
+
+            <p id="noEvents" style="text-align:center;"></p>
+
+        </section>
+
+    </div>
+
+
+    <!-- REGISTRATION PAGE -->
+
+    <div id="register" class="page">
+
+        <div class="page-header">
+
+            <h1>Event Registration</h1>
+
+            <p>Fill in your details to participate in an event.</p>
+
+        </div>
+
+        <div class="form-box">
+
+            <h2>Student Registration Form</h2>
+
+            <form id="registrationForm">
+
+                <div class="form-group">
+                    <label>Student Name</label>
+                    <input type="text" id="studentName"
+                    placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Roll Number</label>
+                    <input type="text" id="rollNo"
+                    placeholder="Enter roll number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email"
+                    placeholder="Enter email address" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" id="phone"
+                    placeholder="10 digit mobile number"
+                    maxlength="10" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Department</label>
+                    <select id="department" required>
+
+                        <option value="">Select Department</option>
+                        <option>Computer Science</option>
+                        <option>Information Technology</option>
+                        <option>Commerce</option>
+                        <option>Mathematics</option>
+                        <option>Physics</option>
+                        <option>Other</option>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Event</label>
+
+                    <select id="registrationEvent" required>
+                        <option value="">Select Event</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">
+                    Submit Registration
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- MY EVENTS PAGE -->
+
+    <div id="myEvents" class="page">
+
+        <div class="page-header">
+
+            <h1>My Registrations</h1>
+
+            <p>View your registered college events.</p>
+
+        </div>
+
+        <section class="section">
+
+            <div class="table-box">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Roll Number</th>
+                            <th>Event</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="myRegistrationList"></tbody>
+
+                </table>
+
+                <p id="myMessage" style="text-align:center;"></p>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- ADMIN LOGIN -->
+
+    <div id="adminLogin" class="page">
+
+        <div class="page-header">
+
+            <h1>Administrator Login</h1>
+
+            <p>Login to manage college events.</p>
+
+        </div>
+
+        <div class="form-box">
+
+            <h2>Admin Login</h2>
+
+            <div class="form-group">
+
+                <label>Username</label>
+
+                <input type="text" id="adminUser"
+                placeholder="Enter username">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input type="password" id="adminPass"
+                placeholder="Enter password">
+
+            </div>
+
+            <button class="btn" onclick="adminLogin()">
+                Login
+            </button>
+
+            <p id="loginMessage" style="text-align:center;"></p>
+
+            <p style="text-align:center; color:gray; font-size:13px;">
+                Demo username: admin<br>
+                Demo password: admin123
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ADMIN DASHBOARD -->
+
+    <div id="dashboard" class="page">
+
+        <div class="page-header">
+
+            <h1>Admin Dashboard</h1>
+
+            <p>Manage your college events and participants.</p>
+
+            <button class="btn btn-red" onclick="adminLogout()">
+                Logout
+            </button>
+
+        </div>
+
+        <section class="section">
+
+            <div class="dashboard-cards">
+
+                <div class="dashboard-card">
+                    <h2 id="totalEvents">0</h2>
+                    <p>Total Events</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h2 id="totalParticipants">0</h2>
+                    <p>Total Registrations</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h2 id="totalCategories">0</h2>
+                    <p>Event Categories</p>
+                </div>
+
+            </div>
+
+            <div class="why-container">
+
+                <div class="why-card">
+                    <h3>Manage Events</h3>
+                    <p>Add, edit and delete college events.</p>
+                    <button class="btn" onclick="showPage('manageEvents')">
+                        Manage Events
+                    </button>
+                </div>
+
+                <div class="why-card">
+                    <h3>Participants</h3>
+                    <p>View all registered students.</p>
+                    <button class="btn" onclick="showPage('participants')">
+                        View Participants
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- MANAGE EVENTS PAGE -->
+
+    <div id="manageEvents" class="page">
+
+        <div class="page-header">
+
+            <h1>Manage Events</h1>
+
+            <p>Add, edit and delete college events.</p>
+
+            <button class="btn btn-dark" onclick="showPage('dashboard')">
+                Back to Dashboard
+            </button>
+
+        </div>
+
+        <div class="form-box">
+
+            <h2 id="eventFormTitle">Add New Event</h2>
+
+            <form id="eventForm">
+
+                <div class="form-group">
+                    <label>Event Name</label>
+                    <input type="text" id="eventName"
+                    placeholder="Enter event name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+
+                    <select id="eventCategory" required>
+                        <option value="">Select Category</option>
+                        <option>Technical</option>
+                        <option>Cultural</option>
+                        <option>Sports</option>
+                        <option>Academic</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Event Date</label>
+                    <input type="date" id="eventDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Venue</label>
+                    <input type="text" id="eventVenue"
+                    placeholder="Enter venue" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Maximum Participants</label>
+                    <input type="number" id="eventCapacity"
+                    min="1" placeholder="Enter capacity" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Registration Deadline</label>
+                    <input type="date" id="eventDeadline" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Event Description</label>
+                    <textarea id="eventDescription"
+                    placeholder="Enter event description" required></textarea>
+                </div>
+
+                <button type="submit" class="btn">
+                    Save Event
+                </button>
+
+                <button type="button" class="btn btn-light"
+                onclick="clearEventForm()">
+                    Clear Form
+                </button>
+
+            </form>
+
+        </div>
+
+        <section class="section">
+
+            <h2 style="text-align:center;">All Events</h2>
+
+            <div class="table-box">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Venue</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="adminEventList"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- PARTICIPANTS PAGE -->
+
+    <div id="participants" class="page">
+
+        <div class="page-header">
+
+            <h1>Participant Management</h1>
+
+            <p>View and search student registrations.</p>
+
+            <button class="btn btn-dark" onclick="showPage('dashboard')">
+                Back to Dashboard
+            </button>
+
+        </div>
+
+        <section class="section">
+
+            <div class="filter-box">
+
+                <input type="text" id="searchParticipant"
+                placeholder="Search by name or roll number"
+                onkeyup="displayParticipants()">
+
+                <select id="participantFilter"
+                onchange="displayParticipants()">
+
+                    <option value="">All Events</option>
+
+                </select>
+
+            </div>
+
+            <div class="table-box">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Roll Number</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Department</th>
+                            <th>Event</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="participantList"></tbody>
+
+                </table>
+
+                <p id="participantMessage"
+                style="text-align:center;"></p>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <h2>Campus<span style="color:#a58aff;">Events.</span></h2>
+
+        <p>Bringing students, ideas and experiences together.</p>
+
+        <p>Email: campusevents@example.com</p>
+
+        <p>© 2026 CampusEvents. All Rights Reserved.</p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // INITIAL DATA
+
+        var defaultEvents = [
+            {
+                id: 1,
+                name: "Coding Competition",
+                category: "Technical",
+                date: "2026-12-15",
+                venue: "Computer Lab",
+                capacity: 50,
+                deadline: "2026-12-10",
+                description: "Show your programming skills and solve exciting coding challenges."
+            },
+            {
+                id: 2,
+                name: "Dance Competition",
+                category: "Cultural",
+                date: "2026-12-18",
+                venue: "College Auditorium",
+                capacity: 40,
+                deadline: "2026-12-14",
+                description: "Show your talent through dance and creative performances."
+            },
+            {
+                id: 3,
+                name: "Cricket Tournament",
+                category: "Sports",
+                date: "2026-12-20",
+                venue: "College Ground",
+                capacity: 100,
+                deadline: "2026-12-16",
+                description: "Participate in an exciting interdepartmental cricket tournament."
+            },
+            {
+                id: 4,
+                name: "Web Development Workshop",
+                category: "Academic",
+                date: "2026-12-22",
+                venue: "Seminar Hall",
+                capacity: 60,
+                deadline: "2026-12-19",
+                description: "Learn the basics of modern web development."
+            },
+            {
+                id: 5,
+                name: "Music Competition",
+                category: "Cultural",
+                date: "2026-12-25",
+                venue: "Main Stage",
+                capacity: 30,
+                deadline: "2026-12-21",
+                description: "Participate in a music competition and share your talent."
+            },
+            {
+                id: 6,
+                name: "Project Exhibition",
+                category: "Technical",
+                date: "2026-12-28",
+                venue: "College Hall",
+                capacity: 70,
+                deadline: "2026-12-24",
+                description: "Present innovative ideas and demonstrate your projects."
+            }
+        ];
+
+
+        // LOAD DATA FROM LOCAL STORAGE
+
+        var events = JSON.parse(localStorage.getItem("events"));
+
+        if (events == null) {
+            events = defaultEvents;
+            localStorage.setItem("events", JSON.stringify(events));
+        }
+
+        var registrations = JSON.parse(
+            localStorage.getItem("registrations")
+        ) || [];
+
+        var editId = null;
+        var selectedEvent = null;
+
+
+        // SAVE DATA
+
+        function saveData() {
+
+            localStorage.setItem("events", JSON.stringify(events));
+
+            localStorage.setItem(
+                "registrations",
+                JSON.stringify(registrations)
+            );
+
+        }
+
+
+        // BASIC HTML SAFETY FOR DISPLAYED TEXT
+
+        function safeText(value) {
+
+            return String(value).replace(/[&<>"']/g, function(character) {
+
+                var characters = {
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#39;"
+                };
+
+                return characters[character];
+
+            });
+
+        }
+
+
+        // CHANGE PAGE
+
+        function showPage(pageId) {
+
+            var pages = document.getElementsByClassName("page");
+
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].classList.remove("active");
+            }
+
+            // Protect admin pages
+            var adminPages = [
+                "dashboard",
+                "manageEvents",
+                "participants"
+            ];
+
+            if (adminPages.includes(pageId) &&
+                localStorage.getItem("adminLoggedIn") != "yes") {
+
+                pageId = "adminLogin";
+
+            }
+
+            document.getElementById(pageId).classList.add("active");
+
+            window.scrollTo(0, 0);
+
+            if (pageId == "home") {
+                displayHomeEvents();
+                updateStatistics();
+            }
+
+            if (pageId == "events") {
+                displayEvents();
+            }
+
+            if (pageId == "register") {
+                updateEventOptions();
+            }
+
+            if (pageId == "myEvents") {
+                displayMyEvents();
+            }
+
+            if (pageId == "dashboard") {
+                updateDashboard();
+            }
+
+            if (pageId == "manageEvents") {
+                displayAdminEvents();
+            }
+
+            if (pageId == "participants") {
+                updateParticipantOptions();
+                displayParticipants();
+            }
+
+        }
+
+
+        // EVENT CARD DESIGN
+
+        function eventCard(event) {
+
+            var categoryClass = event.category.toLowerCase();
+
+            return `
+                <div class="event-card">
+
+                    <div class="event-banner ${safeText(categoryClass)}">
+
+                        <p>${safeText(event.category)}</p>
+
+                        <h2>${safeText(event.name)}</h2>
+
+                    </div>
+
+                    <div class="event-details">
+
+                        <h3>${safeText(event.name)}</h3>
+
+                        <p>${safeText(event.description)}</p>
+
+                        <div class="event-meta">
+
+                            Date: ${safeText(event.date)}<br>
+
+                            Venue: ${safeText(event.venue)}<br>
+
+                            Seats: ${safeText(event.capacity)}
+
+                        </div>
+
+                        <button class="btn"
+                        onclick="openRegistration(${Number(event.id)})">
+
+                            Register Now
+
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+        }
+
+
+        // HOME PAGE EVENTS
+
+        function displayHomeEvents() {
+
+            var list = document.getElementById("homeEventList");
+
+            list.innerHTML = "";
+
+            for (var i = 0; i < events.length && i < 3; i++) {
+
+                list.innerHTML += eventCard(events[i]);
+
+            }
+
+        }
+
+
+        // DISPLAY ALL EVENTS
+
+        function displayEvents() {
+
+            var list = document.getElementById("allEventList");
+
+            var search = document.getElementById("searchEvent").value.toLowerCase();
+
+            var category = document.getElementById("filterCategory").value;
+
+            list.innerHTML = "";
+
+            var count = 0;
+
+            for (var i = 0; i < events.length; i++) {
+
+                var name = events[i].name.toLowerCase();
+
+                if (name.includes(search) &&
+                    (category == "" || events[i].category == category)) {
+
+                    list.innerHTML += eventCard(events[i]);
+
+                    count++;
+
+                }
+
+            }
+
+            if (count == 0) {
+                document.getElementById("noEvents").innerHTML =
+                    "No events found.";
+            }
+            else {
+                document.getElementById("noEvents").innerHTML = "";
+            }
+
+        }
+
+
+        // OPEN REGISTRATION PAGE
+
+        function openRegistration(id) {
+
+            selectedEvent = id;
+
+            showPage("register");
+
+            document.getElementById("registrationEvent").value = id;
+
+        }
+
+
+        // UPDATE EVENT OPTIONS
+
+        function updateEventOptions() {
+
+            var select = document.getElementById("registrationEvent");
+
+            select.innerHTML = '<option value="">Select Event</option>';
+
+            for (var i = 0; i < events.length; i++) {
+
+                var option = document.createElement("option");
+
+                option.value = events[i].id;
+
+                option.textContent = events[i].name;
+
+                select.appendChild(option);
+
+            }
+
+            if (selectedEvent != null) {
+                select.value = selectedEvent;
+            }
+
+        }
+
+
+        // STUDENT REGISTRATION
+
+        document.getElementById("registrationForm").onsubmit =
+        function(event) {
+
+            event.preventDefault();
+
+            var name = document.getElementById("studentName").value.trim();
+
+            var roll = document.getElementById("rollNo").value.trim();
+
+            var email = document.getElementById("email").value.trim();
+
+            var phone = document.getElementById("phone").value.trim();
+
+            var department = document.getElementById("department").value;
+
+            var eventId = Number(
+                document.getElementById("registrationEvent").value
+            );
+
+            if (!/^[0-9]{10}$/.test(phone)) {
+
+                alert("Enter a valid 10 digit phone number.");
+
+                return;
+
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+                alert("Enter a valid email address.");
+
+                return;
+
+            }
+
+            var selected = events.find(function(item) {
+                return item.id == eventId;
+            });
+
+            if (!selected) {
+
+                alert("Please select a valid event.");
+
+                return;
+
+            }
+
+            if (new Date(selected.date + "T23:59:59") < new Date()) {
+
+                alert("Registration is closed because this event has passed.");
+
+                return;
+
+            }
+
+            if (new Date(selected.deadline + "T23:59:59") < new Date()) {
+
+                alert("Registration deadline has passed.");
+
+                return;
+
+            }
+
+            var duplicate = false;
+
+            for (var i = 0; i < registrations.length; i++) {
+
+                if (registrations[i].rollNo.toLowerCase() == roll.toLowerCase()
+                    && registrations[i].eventId == eventId) {
+
+                    duplicate = true;
+
+                }
+
+            }
+
+            if (duplicate) {
+
+                alert("You have already registered for this event.");
+
+                return;
+
+            }
+
+            var count = 0;
+
+            for (var i = 0; i < registrations.length; i++) {
+
+                if (registrations[i].eventId == eventId) {
+                    count++;
+                }
+
+            }
+
+            if (count >= Number(selected.capacity)) {
+
+                alert("Sorry! This event is full.");
+
+                return;
+
+            }
+
+            var registration = {
+
+                id: Date.now(),
+
+                studentName: name,
+
+                rollNo: roll,
+
+                email: email,
+
+                phone: phone,
+
+                department: department,
+
+                eventId: eventId,
+
+                eventName: selected.name,
+
+                date: selected.date
+
+            };
+
+            registrations.push(registration);
+
+            saveData();
+
+            alert("Registration successful!");
+
+            document.getElementById("registrationForm").reset();
+
+            selectedEvent = null;
+
+            showPage("myEvents");
+
+        };
+
+
+        // DISPLAY MY REGISTRATIONS
+
+        function displayMyEvents() {
+
+            var list = document.getElementById("myRegistrationList");
+
+            list.innerHTML = "";
+
+            if (registrations.length == 0) {
+
+                document.getElementById("myMessage").innerHTML =
+                    "No registrations available.";
+
+                return;
+
+            }
+
+            document.getElementById("myMessage").innerHTML = "";
+
+            for (var i = 0; i < registrations.length; i++) {
+
+                var r = registrations[i];
+
+                var row = document.createElement("tr");
+
+                var values = [
+                    r.studentName,
+                    r.rollNo,
+                    r.eventName,
+                    r.date
+                ];
+
+                for (var j = 0; j < values.length; j++) {
+
+                    var cell = document.createElement("td");
+
+                    cell.textContent = values[j];
+
+                    row.appendChild(cell);
+
+                }
+
+                var actionCell = document.createElement("td");
+
+                var btn = document.createElement("button");
+
+                btn.textContent = "Cancel";
+
+                btn.className = "btn btn-red";
+
+                btn.onclick = function(id) {
+
+                    return function() {
+
+                        cancelRegistration(id);
+
+                    };
+
+                }(r.id);
+
+                actionCell.appendChild(btn);
+
+                row.appendChild(actionCell);
+
+                list.appendChild(row);
+
+            }
+
+        }
+
+
+        // CANCEL REGISTRATION
+
+        function cancelRegistration(id) {
+
+            if (confirm("Are you sure you want to cancel?")) {
+
+                registrations = registrations.filter(function(item) {
+
+                    return item.id != id;
+
+                });
+
+                saveData();
+
+                displayMyEvents();
+
+                updateDashboard();
+
+            }
+
+        }
+
+
+        // ADMIN LOGIN
+
+        function adminLogin() {
+
+            var username = document.getElementById("adminUser").value;
+
+            var password = document.getElementById("adminPass").value;
+
+            if (username == "admin" && password == "admin123") {
+
+                localStorage.setItem("adminLoggedIn", "yes");
+
+                document.getElementById("loginMessage").innerHTML = "";
+
+                document.getElementById("adminUser").value = "";
+
+                document.getElementById("adminPass").value = "";
+
+                showPage("dashboard");
+
+            }
+
+            else {
+
+                document.getElementById("loginMessage").innerHTML =
+                    "Invalid username or password.";
+
+            }
+
+        }
+
+
+        // ADMIN LOGOUT
+
+        function adminLogout() {
+
+            localStorage.removeItem("adminLoggedIn");
+
+            alert("Logged out successfully.");
+
+            showPage("home");
+
+        }
+
+
+        // DASHBOARD STATISTICS
+
+        function updateDashboard() {
+
+            document.getElementById("totalEvents").innerHTML = events.length;
+
+            document.getElementById("totalParticipants").innerHTML =
+                registrations.length;
+
+            var categories = [];
+
+            for (var i = 0; i < events.length; i++) {
+
+                if (!categories.includes(events[i].category)) {
+
+                    categories.push(events[i].category);
+
+                }
+
+            }
+
+            document.getElementById("totalCategories").innerHTML =
+                categories.length;
+
+            updateStatistics();
+
+        }
+
+
+        // HOME STATISTICS
+
+        function updateStatistics() {
+
+            document.getElementById("homeEvents").innerHTML = events.length;
+
+            document.getElementById("homeParticipants").innerHTML =
+                registrations.length;
+
+        }
+
+
+        // ADD OR EDIT EVENT
+
+        document.getElementById("eventForm").onsubmit = function(event) {
+
+            event.preventDefault();
+
+            var name = document.getElementById("eventName").value.trim();
+
+            var category = document.getElementById("eventCategory").value;
+
+            var date = document.getElementById("eventDate").value;
+
+            var venue = document.getElementById("eventVenue").value.trim();
+
+            var capacity = Number(
+                document.getElementById("eventCapacity").value
+            );
+
+            var deadline = document.getElementById("eventDeadline").value;
+
+            var description = document.getElementById("eventDescription").value.trim();
+
+            if (new Date(deadline) > new Date(date)) {
+
+                alert("Registration deadline cannot be after event date.");
+
+                return;
+
+            }
+
+            if (capacity < 1) {
+
+                alert("Enter a valid event capacity.");
+
+                return;
+
+            }
+
+            if (editId == null) {
+
+                var newEvent = {
+
+                    id: Date.now(),
+
+                    name: name,
+
+                    category: category,
+
+                    date: date,
+
+                    venue: venue,
+
+                    capacity: capacity,
+
+                    deadline: deadline,
+
+                    description: description
+
+                };
+
+                events.push(newEvent);
+
+                alert("Event added successfully!");
+
+            }
+
+            else {
+
+                for (var i = 0; i < events.length; i++) {
+
+                    if (events[i].id == editId) {
+
+                        events[i].name = name;
+
+                        events[i].category = category;
+
+                        events[i].date = date;
+
+                        events[i].venue = venue;
+
+                        events[i].capacity = capacity;
+
+                        events[i].deadline = deadline;
+
+                        events[i].description = description;
+
+                    }
+
+                }
+
+                // Update saved event details in registrations
+
+                for (var i = 0; i < registrations.length; i++) {
+
+                    if (registrations[i].eventId == editId) {
+
+                        registrations[i].eventName = name;
+
+                        registrations[i].date = date;
+
+                    }
+
+                }
+
+                alert("Event updated successfully!");
+
+            }
+
+            saveData();
+
+            clearEventForm();
+
+            displayAdminEvents();
+
+            updateDashboard();
+
+        };
+
+
+        // CLEAR EVENT FORM
+
+        function clearEventForm() {
+
+            document.getElementById("eventForm").reset();
+
+            editId = null;
+
+            document.getElementById("eventFormTitle").innerHTML =
+                "Add New Event";
+
+        }
+
+
+        // DISPLAY ADMIN EVENTS
+
+        function displayAdminEvents() {
+
+            var list = document.getElementById("adminEventList");
+
+            list.innerHTML = "";
+
+            for (var i = 0; i < events.length; i++) {
+
+                var e = events[i];
+
+                var row = document.createElement("tr");
+
+                var values = [
+                    e.name,
+                    e.category,
+                    e.date,
+                    e.venue
+                ];
+
+                for (var j = 0; j < values.length; j++) {
+
+                    var cell = document.createElement("td");
+
+                    cell.textContent = values[j];
+
+                    row.appendChild(cell);
+
+                }
+
+                var actionCell = document.createElement("td");
+
+                var editButton = document.createElement("button");
+
+                editButton.textContent = "Edit";
+
+                editButton.className = "btn";
+
+                editButton.onclick = function(id) {
+
+                    return function() {
+                        editEvent(id);
+                    };
+
+                }(e.id);
+
+
+                var deleteButton = document.createElement("button");
+
+                deleteButton.textContent = "Delete";
+
+                deleteButton.className = "btn btn-red";
+
+                deleteButton.onclick = function(id) {
+
+                    return function() {
+                        deleteEvent(id);
+                    };
+
+                }(e.id);
+
+                actionCell.appendChild(editButton);
+
+                actionCell.appendChild(deleteButton);
+
+                row.appendChild(actionCell);
+
+                list.appendChild(row);
+
+            }
+
+        }
+
+
+        // EDIT EVENT
+
+        function editEvent(id) {
+
+            var e = events.find(function(item) {
+
+                return item.id == id;
+
+            });
+
+            if (e) {
+
+                editId = id;
+
+                document.getElementById("eventName").value = e.name;
+
+                document.getElementById("eventCategory").value = e.category;
+
+                document.getElementById("eventDate").value = e.date;
+
+                document.getElementById("eventVenue").value = e.venue;
+
+                document.getElementById("eventCapacity").value = e.capacity;
+
+                document.getElementById("eventDeadline").value = e.deadline;
+
+                document.getElementById("eventDescription").value = e.description;
+
+                document.getElementById("eventFormTitle").innerHTML =
+                    "Edit Event";
+
+                window.scrollTo(0, 0);
+
+            }
+
+        }
+
+
+        // DELETE EVENT
+
+        function deleteEvent(id) {
+
+            if (confirm("Are you sure you want to delete this event?")) {
+
+                events = events.filter(function(item) {
+
+                    return item.id != id;
+
+                });
+
+                // Remove registrations for deleted event
+
+                registrations = registrations.filter(function(item) {
+
+                    return item.eventId != id;
+
+                });
+
+                saveData();
+
+                displayAdminEvents();
+
+                updateDashboard();
+
+                alert("Event deleted successfully!");
+
+            }
+
+        }
+
+
+        // PARTICIPANT EVENT FILTER
+
+        function updateParticipantOptions() {
+
+            var select = document.getElementById("participantFilter");
+
+            select.innerHTML = '<option value="">All Events</option>';
+
+            for (var i = 0; i < events.length; i++) {
+
+                var option = document.createElement("option");
+
+                option.value = events[i].id;
+
+                option.textContent = events[i].name;
+
+                select.appendChild(option);
+
+            }
+
+        }
+
+
+        // DISPLAY PARTICIPANTS
+
+        function displayParticipants() {
+
+            var list = document.getElementById("participantList");
+
+            var search = document.getElementById("searchParticipant")
+            .value.toLowerCase();
+
+            var filter = document.getElementById("participantFilter").value;
+
+            list.innerHTML = "";
+
+            var count = 0;
+
+            for (var i = 0; i < registrations.length; i++) {
+
+                var r = registrations[i];
+
+                var name = r.studentName.toLowerCase();
+
+                var roll = r.rollNo.toLowerCase();
+
+                if ((name.includes(search) || roll.includes(search)) &&
+                    (filter == "" || r.eventId == filter)) {
+
+                    var row = document.createElement("tr");
+
+                    var values = [
+                        r.studentName,
+                        r.rollNo,
+                        r.email,
+                        r.phone,
+                        r.department,
+                        r.eventName
+                    ];
+
+                    for (var j = 0; j < values.length; j++) {
+
+                        var cell = document.createElement("td");
+
+                        cell.textContent = values[j];
+
+                        row.appendChild(cell);
+
+                    }
+
+                    list.appendChild(row);
+
+                    count++;
+
+                }
+
+            }
+
+            if (count == 0) {
+
+                document.getElementById("participantMessage").innerHTML =
+                    "No participants found.";
+
+            }
+
+            else {
+
+                document.getElementById("participantMessage").innerHTML =
+                    count + " participant(s) found.";
+
+            }
+
+        }
+
+
+        // INITIAL PAGE LOAD
+
+        displayHomeEvents();
+
+        updateStatistics();
+
+    </script>
+
+</body>
+</html>
